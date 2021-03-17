@@ -3,7 +3,7 @@ var server = require('http').createServer(app);
 // http server를 socket.io server로 upgrade한다
 var io = require('socket.io')(server, {
     cors: {
-      origin: "http://localhost",
+      origin: "http://etfholdings.ga",
       methods: ["GET", "POST"],
       allowedHeaders: ["my-custom-header"],
       credentials: true
