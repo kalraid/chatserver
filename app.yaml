@@ -1,6 +1,0 @@
-runtime: nodejs12
-#env: flex
-
-network:
-  instance_tag: websocket
-  session_affinity: false

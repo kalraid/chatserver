@@ -75,6 +75,6 @@ io.on('connect', function (socket) {
 //     });
 // });
 
-server.listen(65080, function () {
-    console.log('Socket IO server listening on port 65080');
+server.listen(3000, function () {
+    console.log('Socket IO server listening on port 3000');
 });
