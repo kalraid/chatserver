@@ -3,64 +3,54 @@ var server = require('http').createServer(app);
 // http server를 socket.io server로 upgrade한다
 var io = require('socket.io')(server, {
     cors: {
-      origin: "http://etfholdings.ga",
-      methods: ["GET", "POST"],
-      allowedHeaders: ["my-custom-header"],
-      credentials: true
+        origin: ["http://localhost","http//etfholdings.ga"],
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
     }
-  });
+});
 
-io.on('connection', function (socket) {
-    let users  = [{user: 'GME', socketId: 'GME'},{user : 'EHANG', socketId:'EHANG'}];
-    let rooms = [];
+let users = [{ user: 'GME', socketId: 'GME' }, { user: 'EHANG', socketId: 'EHANG' }];
+let rooms = [];
+io.on('connect', function (socket) {
+    // 누군가 입장시 
+    socket.on('start_chat', (data) => {
+        socket.user = data.user;
+        console.log(' connect : ' + data.socketId+ ' name : '+socket.user);
+        users.push({ user: data.user, socketId: data.socketId })
+        socket.emit('set_user_list', {
+            users: users
+        });
+        socket.broadcast.emit('set_user_list', {
+            users: users
+        });
+    })
+
+    // 내가 퇴장시
+    socket.on('disconnect', (data) => {
+        console.log(' disconnect : ' + socket.id+ ' name : '+socket.user);
+        users = users.filter((item, index) => !(item.socketId === socket.id) );
+        socket.emit('set_user_list', {
+            users: users
+        });
+        socket.broadcast.emit('set_user_list', {
+            users: users
+        });
+    });
+
 
     // 클라이언트로부터의 메시지가 수신되면
     socket.on('chat', function (data) {
         console.log('Message from %s: %s', data.user, data.msg);
-
         var msg = {
-            user : data.user,
-            socketId : data.socketId,
-            msg : data.msg
+            user: data.user,
+            socketId: data.socketId,
+            msg: data.msg
         };
 
         // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
         socket.broadcast.emit('chat', msg);
     });
-
-    socket.on('leave_chat', function (data) {
-        users.pop(users.indexOf(o => o.user == data.user));
-        socket.broadcast.emit('leave_chat', {
-            user : data.user,
-            socketId : data.socketId 
-        });
-    });
-
-    socket.on('connect', function (data) {
-        log.info('Inner from %s: %s', data.user)
-        users.push({user : data.user, socketId : data.socketId})
-        socket.emit('set_user_list',{
-            users : users
-        });
-    });
-    socket.on('connecttion', function (data) {
-        log.info('Inner2 from %s: %s', data.user)
-        users.push({user : data.user, socketId : data.socketId})
-        socket.emit('set_user_list',{
-            users : users
-        });
-    });
-
-    socket.on('start_chat', function(data){
-        // console.log(socket);
-        log.info('Inner from %s: %s', data.user)
-        socket.broadcast.emit('start_chat', {
-            user : data.user,
-            socketId : data.socketId ,
-            users : users
-        });
-    })
-
 
 });
 
