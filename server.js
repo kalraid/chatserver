@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 // http server를 socket.io server로 upgrade한다
 var io = require('socket.io')(server, {
     cors: {
-        origin: ["http://localhost", "http//etfholdings.ga","https://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com","http://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com"],
+        origin: ["http://localhost"],
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
         credentials: true
