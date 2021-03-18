@@ -12,7 +12,7 @@ var io = require('socket.io')(server, {
         origin: ["http://localhost", "http//etfholdings.ga","https://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com","http://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com"],
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
-        credentials: false
+        credentials: true
     }
 });
 
