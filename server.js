@@ -16,7 +16,7 @@ var io = require('socket.io')(server, {
     }
 });
 
-let users = [{ user: 'GME', socketId: 'GME' }, { user: 'EHANG', socketId: 'EHANG' }];
+let users = [{ user: '[개발자]캐시눈나지수 개발 예정', socketId: 'devloper' }];
 let rooms = [];
 io.on('connect', function (socket) {
     // 누군가 입장시 
