@@ -3,16 +3,16 @@ var server = require('http').createServer(app);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
-  })
+})
 
-  
+
 // http server를 socket.io server로 upgrade한다
 var io = require('socket.io')(server, {
     cors: {
-        origin: ["http://localhost","http//etfholdings.ga"],
+        origin: ["http://localhost", "http//etfholdings.ga","https://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com","http://www.google.com/url?q=https%3A%2F%2Fmy-project-1530146807690.uc.r.appspot.com"],
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
-        credentials: true
+        credentials: false
     }
 });
 
@@ -22,7 +22,7 @@ io.on('connect', function (socket) {
     // 누군가 입장시 
     socket.on('start_chat', (data) => {
         socket.user = data.user;
-        console.log(' connect : ' + data.socketId+ ' name : '+socket.user);
+        console.log(' connect : ' + data.socketId + ' name : ' + socket.user);
         users.push({ user: data.user, socketId: data.socketId })
         socket.emit('set_user_list', {
             users: users
@@ -34,8 +34,8 @@ io.on('connect', function (socket) {
 
     // 내가 퇴장시
     socket.on('disconnect', (data) => {
-        console.log(' disconnect : ' + socket.id+ ' name : '+socket.user);
-        users = users.filter((item, index) => !(item.socketId === socket.id) );
+        console.log(' disconnect : ' + socket.id + ' name : ' + socket.user);
+        users = users.filter((item, index) => !(item.socketId === socket.id));
         socket.emit('set_user_list', {
             users: users
         });
@@ -76,5 +76,5 @@ io.on('connect', function (socket) {
 // });
 
 server.listen(65080, function () {
-    console.log('Socket IO server listening on port 3000');
+    console.log('Socket IO server listening on port 65080');
 });
