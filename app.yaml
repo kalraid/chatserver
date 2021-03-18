@@ -1,15 +1,6 @@
-runtime: nodejs
-env: flex
-
-manual_scaling:
-  instances: 1
-resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
+runtime: nodejs12
+#env: flex
 
 network:
-  forwarded_ports:
-    - 65080
   instance_tag: websocket
   session_affinity: false
