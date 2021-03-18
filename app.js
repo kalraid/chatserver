@@ -1,5 +1,11 @@
 var app = require('express')();
 var server = require('http').createServer(app);
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+  })
+
+  
 // http server를 socket.io server로 upgrade한다
 var io = require('socket.io')(server, {
     cors: {
