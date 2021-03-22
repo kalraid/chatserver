@@ -12,11 +12,11 @@ var io = require('socket.io')(server, {
         origin: ["http//etfholdings.ga", "http://localhost"],
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
-        credentials: true
+        credentials: false
     }
 });
 
-let users = [{ user: 'GME', socketId: 'GME' }, { user: 'EHANG', socketId: 'EHANG' }];
+let users = [{ user: '[GM] /web/main', socketId: 'devloper' }];
 let rooms = [];
 io.on('connect', function (socket) {
     // 누군가 입장시 
