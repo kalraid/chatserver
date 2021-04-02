@@ -18,6 +18,7 @@ var io = require('socket.io')(server, {
 
 let users = [{ user: '[GM] /web/main', socketId: 'devloper' }];
 let rooms = [];
+let msgs = [];
 io.on('connect', function (socket) {
     // 누군가 입장시 
     socket.on('start_chat', (data) => {
@@ -30,6 +31,10 @@ io.on('connect', function (socket) {
         socket.broadcast.emit('set_user_list', {
             users: users
         });
+
+        msgs.forEach((msg)=>{
+            socket.emit('chat', msg);
+        })
     })
 
     // 내가 퇴장시
@@ -53,6 +58,11 @@ io.on('connect', function (socket) {
             socketId: data.socketId,
             msg: data.msg
         };
+
+        msgs.push(msg)
+        if(msgs.length > 100){
+            msgs.pop;
+        }
 
         // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
         socket.broadcast.emit('chat', msg);
