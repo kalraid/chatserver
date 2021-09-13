@@ -16,7 +16,7 @@ var io = require('socket.io')(server, {
     }
 });
 
-let users = [{ user: '[GM] /web/main', socketId: 'devloper' }];
+let users = [{ user: '[GM] 개발자', socketId: 'devloper' }];
 let rooms = [];
 let msgs = [];
 io.on('connect', function (socket) {
